@@ -1,0 +1,22 @@
+MGU coding backup, taken read-only before a flash
+VIN:   LBV31DU03NS273096
+Taken: 2026-11-22 10:27:38 UTC
+CAFD:  CAFD 00003E52_008.007.023
+SVK:   HWEL 0000786E_001.003.001, BTLD 00003F36_018.027.040, SWFL 00005CC5_018.027.001, SWFL 00005686_018.027.001, SWFL 000056E5_018.027.001, SWFL 000056E6_018.027.001, SWFL 000056E7_018.027.001, SWFL 000056E8_018.027.001, SWFL 000056E9_018.027.001, SWFL 000056EA_018.027.001, SWFL 000056EB_018.027.001, SWFL 000056EC_018.027.001, SWFL 000056EE_018.027.001, SWFL 00005687_018.027.001, SWFL 00005684_018.027.001, SWFL 00005685_018.027.001, SWFK 00007CFC_018.027.001, SWFK 00005CC6_018.027.001, SWFK 00005CCA_018.027.001, SWFK 00005A94_018.027.001, SWFK 000073B7_018.027.001, SWFK 00005A5C_018.027.001, SWFK 000056AA_018.027.001, SWFK 000056B8_018.027.001, SWFK 000056B9_018.027.001, SWFK 000056BC_018.027.001, SWFK 000056BD_018.027.001, SWFK 000056C1_018.027.001, SWFK 000056D0_018.027.001, SWFK 000056D1_018.027.001, SWFK 000056D2_018.027.001, SWFK 00005CC7_018.027.001, SWFK 00005688_018.027.001, SWFK 00005689_018.027.001, SWFK 0000568A_018.027.001, SWFK 0000568B_018.027.001, SWFK 0000568C_018.027.001, SWFK 0000568D_018.027.001, SWFK 0000568E_018.027.001, SWFK 0000568F_018.027.001, SWFK 0000569E_018.027.001, SWFK 00006949_018.027.001, SWFK 00005A95_018.027.001, SWFK 00005A96_018.027.001, SWFK 000083B8_018.027.001, SWFK 000083B6_018.027.001, SWFK 000083B7_018.027.001, CAFD 00003E52_008.007.023
+
+Files
+- coding_MGU.txt : the MGU's coding, byte for byte (23 blocks, DID 0x3000-0x3FFF),
+                   read twice and compared
+- backup.json    : the same, plus the identification DIDs and the full SVK, as JSON
+- SHA256SUMS     : checksums of the two files above
+
+Restoring after a flash
+The flash invalidates the CAFD coding; put it back with a coding tool (E-Sys or BimmerCode):
+  1. Preferred: re-code HU_MGU by vehicle order (VO coding / "code by FA"). This rebuilds the
+     coding for the car as it is optioned and is the most reliable path - see issue #10, where
+     restoring a whole coding blob left settings resetting and VO coding fixed it, with root and
+     the apps surviving.
+  2. The byte-for-byte record above (coding_MGU.txt) is your reference to check the result
+     against, or to write back block by block if you code by hand.
+Navigation maps are not coding (they live on a separate disk partition), so the flash does not
+touch them. BMW Digital Key pairings and some personal settings are lost on a flash regardless.
